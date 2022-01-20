@@ -20,7 +20,7 @@ const register = async (req, res) => {
   try {
     const emailExist = await User.findOne({ email: req.body.email });
     if (emailExist) {
-      res.status(400).json({ message: "Email already exists" });
+      res.status(200).json({ message: "Email already exists" });
       return;
     }
   } catch (error) {
@@ -62,11 +62,11 @@ const loginSchema = Joi.object({
 const login = async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user)
-    return res.status(400).json({ message: "Incorrect Email-ID", auth: false });
+    return res.status(200).json({ message: "Incorrect Email-ID", auth: false });
 
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword)
-    return res.status(400).json({ message: "Incorrect Password", auth: false });
+    return res.status(200).json({ message: "Incorrect Password", auth: false });
   try {
     const { error } = await loginSchema.validateAsync(req.body);
     if (error)

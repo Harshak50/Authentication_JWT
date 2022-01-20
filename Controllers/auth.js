@@ -46,7 +46,7 @@ const register = async (req, res) => {
     } else {
       // SAVE NEW USER
       await user.save();
-      res.status(200).json({ message: "User Created" });
+      res.status(200).json({ message: "Please Verify Your Email",auth:false });
     }
   } catch (error) {
     res.status(400).json({ message: error, auth: false });

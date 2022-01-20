@@ -41,12 +41,12 @@ const register = async (req, res) => {
     //VALIDATION FOR USER INPURTS
     const { error } = await registerSchema.validateAsync(req.body);
     if (error) {
-      res.status(400).json({ message: error.details[0].message, auth: false });
+      res.status(400).json({ message: error.details[0].message, saved:false });
       return;
     } else {
       // SAVE NEW USER
       await user.save();
-      res.status(200).json({ message: "Please Verify Your Email",auth:false });
+      res.status(200).json({ message: "Please Verify Your Email",isActive:false,saved:true });
     }
   } catch (error) {
     res.status(400).json({ message: error, auth: false });
@@ -86,7 +86,7 @@ const login = async (req, res) => {
         .json({ message: "Successfully loggedin", token: token, auth: true });
     }
   } catch (error) {
-    res.status(500).json({ message: error, auth: true, isActive:false });
+    res.status(500).json({ message: error, auth: false });
   }
 };
 

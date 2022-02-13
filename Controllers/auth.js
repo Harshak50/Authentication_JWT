@@ -49,7 +49,7 @@ const register = async (req, res) => {
     
       // SAVE NEW USER
       console.log("Saved User");
-      // await user.save();
+      await user.save();
 
 
      // EMAIL VERIFICATION
@@ -63,8 +63,6 @@ const register = async (req, res) => {
           auth:{
               pass:process.env.PASS,
               user:process.env.HOST_EMAIL,
-              // user:"kondapuramharsha@gmail.com",
-              // pass:"roytamaigvtjgafy",
           },
       });
 

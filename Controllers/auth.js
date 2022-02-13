@@ -89,11 +89,11 @@ const register = async (req, res) => {
   }
 };
 
-const verifyEmail = async (req, res) => {
+ verifyEmail = async (req, res) => {
   const token  = req.params.verificationToken;
   if (!token) {
     return res.status(422).send({
-      message: "Missing Token",
+      message: "Oh no, missing token",
     });
   }
   let payload = null;

@@ -1,4 +1,3 @@
-const { bool, boolean } = require('joi');
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     fname:{
@@ -28,6 +27,10 @@ const userSchema = mongoose.Schema({
     date:{
         type:Date,
         default:Date.now(),
+    },
+    isActive:{
+        type:Boolean,
+        default:false,
     },
     token:{
         type:String,

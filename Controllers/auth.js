@@ -2,11 +2,11 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../Models/User");
-const sendEmail= require('../Utils/email');
 const Joi = require("joi");
+const nodemailer = require('nodemailer');
 const dotenv = require("dotenv");
-const { validate } = require("../Models/User");
 dotenv.config();
+
 
 // VALIDATION OF USER INPUTS PREREQUISITIES
 const registerSchema = Joi.object({
@@ -45,15 +45,37 @@ const register = async (req, res) => {
       res.status(400).json({ message: error.details[0].message, saved:false });
       return;
     } else {
+
+    
       // SAVE NEW USER
       console.log("Saved User");
-      await user.save();
+      // await user.save();
+
+
      // EMAIL VERIFICATION
      const verificationToken = '';
     var username = user.fname;
-     const url = 'http://localhost:9000/api/verify/verificationToken';
-     await sendEmail(user.email, 'Verify Your Account '+username, url);
-     return res.status(201).json({message:"Sent a verification mail to "+ req.body.email,isActive:false, saved:true });
+    const url = 'http://localhost:9000/api/verify/verificationToken';
+    console.log("Trying to send mail")
+    const transporter =  nodemailer.createTransport({
+          service:process.env.SERVICE,
+          port:587,
+          auth:{
+              pass:process.env.PASS,
+              user:process.env.HOST_EMAIL,
+              // user:"kondapuramharsha@gmail.com",
+              // pass:"roytamaigvtjgafy",
+          },
+      });
+
+     await transporter.sendMail({
+          from:process.env.HOST_EMAIL,
+          to:user.email,
+          subject:"Verify Your Account "+username,
+          text:url,
+      });
+      console.log("Verification mail sent successfully");
+    return res.status(201).json({message:"Sent a verification mail to "+ user.email,isActive:false, saved:true })
     }
   } catch (error) {
     res.status(400).json({ message: error, auth: false });

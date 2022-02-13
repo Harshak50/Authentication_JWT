@@ -2,8 +2,10 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../Models/User");
+const sendEmail= require('../Utils/email');
 const Joi = require("joi");
 const dotenv = require("dotenv");
+const { validate } = require("../Models/User");
 dotenv.config();
 
 // VALIDATION OF USER INPUTS PREREQUISITIES
@@ -29,7 +31,6 @@ const register = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
   const user = new User({
     fname: req.body.fname,
     lname: req.body.lname,
@@ -45,13 +46,22 @@ const register = async (req, res) => {
       return;
     } else {
       // SAVE NEW USER
+      console.log("Saved User");
       await user.save();
-      res.status(200).json({ message: "Please Verify Your Email",isActive:false,saved:true });
+     // EMAIL VERIFICATION
+     const verificationToken = '';
+    var username = user.fname;
+     const url = 'http://localhost:9000/api/verify/verificationToken';
+     await sendEmail(user.email, 'Verify Your Account '+username, url);
+     return res.status(201).json({message:"Sent a verification mail to "+ req.body.email,isActive:false, saved:true });
     }
   } catch (error) {
     res.status(400).json({ message: error, auth: false });
   }
 };
+
+
+
 // VALIDATION FOR LOGIN INPUT
 const loginSchema = Joi.object({
   email: Joi.string().min(6).required().email(),
@@ -89,6 +99,8 @@ const login = async (req, res) => {
     res.status(500).json({ message: error, auth: false });
   }
 };
+
+
 
 const getUserFromToken = async (req, res) => {
   var token = req.headers["x-access-token"];

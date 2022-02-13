@@ -53,7 +53,7 @@ const register = async (req, res) => {
 
 
      // EMAIL VERIFICATION
-     const verificationToken = '';
+    const verificationToken = '';
     var username = user.fname;
     const url = 'http://localhost:9000/api/verify/verificationToken';
     console.log("Trying to send mail")

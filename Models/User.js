@@ -24,19 +24,18 @@ const userSchema = mongoose.Schema({
         max:1024,
         min:6,
     },
-    date:{
-        type:Date,
-        default:Date.now(),
-    },
     isActive:{
         type:Boolean,
         default:false,
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    verificationToken: String,
     token:{
         type:String,
         required:false,
     }
-});
+}, {timestamps:true});
 
 var user = mongoose.model('User',userSchema);
 module.exports = user;

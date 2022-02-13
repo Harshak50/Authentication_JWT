@@ -44,7 +44,7 @@ const register = async (req, res) => {
       res.status(400).json({ message: error.details[0].message, saved: false });
       return;
     } else {
-      // SAVE NEW USER
+      // SAVE NEW USER AND VERIFY
       console.log("Saved User");
       await user.save();
 

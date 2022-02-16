@@ -33,9 +33,9 @@ app.listen(port, () => {
 // Cron automatically Delete user data if not verified in 10min of account creation
 
 
-// schedule.scheduleJob('*/10 * * * *', function(){
+// schedule.scheduleJob('*/1 * * * *', function(){
 // console.log('Started Scheduling job erasing users')
-// const eraseDate = new Date(+new Date() - 10 * 60 * 1000); 
+// const eraseDate = new Date(+new Date() - 10 * 60 * 1000); ``
 // console.log("Erasing users before: "+eraseDate)
 // console.log("Current date: "+new Date);
 // user.deleteMany({isActive:false, createdAt: {$lte:eraseDate}}, (err)=>{

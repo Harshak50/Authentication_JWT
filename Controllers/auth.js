@@ -61,7 +61,7 @@ const register = async (req, res) => {
         port: 587,
         auth: {
           pass: process.env.PASS,
-          user: process.env.HOST_EMAIL,
+           user: process.env.HOST_EMAIL,
         },
       });
 

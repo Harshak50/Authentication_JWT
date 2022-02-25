@@ -26,7 +26,7 @@ app.use("/users",authRoute);
 
 const port = process.env.PORT || 9000;
 app.listen(port, () => {
-  console.log("Server running up and healthy");
+  console.log("Server is  running up and healthy");
 });
 
 

@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const authRoute = require("./Routes/authRoutes");
+const apiRoute = require("./Routes/apiRoutes");
 const cors = require("cors");
 app.use(express.json(), cors()); 
 const dotenv = require("dotenv");
 const schedule = require("node-schedule");
 const user = require("./Models/User");
+const api = require("./Models/api");
 dotenv.config();
 
 
@@ -23,6 +25,7 @@ try {
 
 
 app.use("/users",authRoute);
+app.use("/apis",apiRoute)
 
 const port = process.env.PORT || 9000;
 app.listen(port, () => {

@@ -58,7 +58,7 @@ const deleteAPi = async (req, res) => {
 
 const allApis = async (req, res) => {
   try {
-    const data = await Api.find();
+    const data = await Api.find({public:true});
     let apis = [];
     if (data) {
       data.map((e) => {
